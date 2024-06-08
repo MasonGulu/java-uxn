@@ -20,6 +20,11 @@ public class UXN {
     private boolean running = false;
     private final Queue<Integer> vectorQueue = new LinkedList<>();
 
+
+    public String toString() {
+        return wst + "\n" + rst;
+    }
+
     public UXN() {
         setDevice(0, new SystemDevice());
     }
@@ -109,14 +114,14 @@ public class UXN {
                 } // intentional fall through
             case 0x40: // JMI
                 // index into ram (replaces *rr)
-                pc += 2 + (short)memory.readShort(pc);
+                pc += 2 + (short) memory.readShort(pc);
                 break;
             case 0x60: // JSI
-                int rr = pc;
                 s.shift(2);
+                int rr = pc;
                 pc += 2;
                 s.setT(true, pc);
-                pc += memory.readShort(rr);
+                pc += (short) memory.readShort(rr); // turn signed
                 break;
             case 0x80: case 0xc0: // LIT
             case 0xa0: case 0xe0: // LIT2

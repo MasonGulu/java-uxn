@@ -18,18 +18,21 @@ public class Main {
         Console console = new Console();
         uxn.setDevice(1, console);
         System.arraycopy(rom, 0, uxn.memory.getData(), 0x100, rom.length);
-        uxn.queueVector(0x0100);
-        UXNExecutor thread = new UXNExecutor();
-        thread.addUXN(uxn);
-        thread.start();
-        while (true) {
-            try {
-                char ch = (char) System.in.read();
-                console.handle(uxn, ch);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//        uxn.queueVector(0x0100);
+//        UXNExecutor thread = new UXNExecutor();
+//        thread.addUXN(uxn);
+//        thread.start();
+//        while (true) {
+//            try {
+//                char ch = (char) System.in.read();
+//                console.handle(uxn, ch);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+        uxn.pc = 0x100;
+        uxn.run();
+        System.out.println(uxn);
     }
 }
 

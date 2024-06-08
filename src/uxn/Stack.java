@@ -17,7 +17,7 @@ public class Stack {
         sb.append(" ");
         for (int i = wrap(top - 7); i != wrap(top + 1); i = wrap(i + 1)) {
             int x = wrap(i);
-            sb.append(String.format("%02X", data[wrap(x)]));
+            sb.append(String.format("%02x", data[wrap(x)]));
             sb.append(x == 255 ? "|" : " "); // show the bottom of the stack
         }
         sb.append("<");
