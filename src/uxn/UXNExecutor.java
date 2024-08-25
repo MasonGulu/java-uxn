@@ -17,10 +17,16 @@ public class UXNExecutor extends Thread {
     public void tick() {
         for (UXN uxn : UXNs) {
             uxn.runLimited(100);
+            if (!uxn.isRunning()) {
+                removeUXN(uxn);
+            }
         }
     }
 
+    @Override
     public void run() {
-        while (true) tick();
+        do {
+            tick();
+        } while (!UXNs.isEmpty());
     }
 }
