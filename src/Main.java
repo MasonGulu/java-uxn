@@ -27,9 +27,10 @@ public class Main {
         String[] uxnArgs = Arrays.copyOfRange(args, 1, args.length);
         console.queueArgs(uxnArgs);
         System.err.printf("installing rom of size %s\n", rom.length);
-        uxn._enable_debug = true;
+        uxn._enable_debug = false;
         System.arraycopy(rom, 0, uxn.memory.getData(), 0x100, rom.length);
         uxn.pc = 0x100;
+
 //        UXNExecutor thread = new UXNExecutor();
 //        thread.addUXN(uxn);
 //        thread.start();

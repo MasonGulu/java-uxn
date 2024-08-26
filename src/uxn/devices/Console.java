@@ -16,18 +16,22 @@ public class Console extends Device {
 
     public void queueArgs(String[] strs) {
         if (strs.length == 0) {return;}
-        for (String str : strs) {
+        for (int i = 0; i < strs.length; i++) {
+            String str = strs[i];
             try {
                 byte[] bytes = str.getBytes("IBM437");
                 for (byte byt : bytes) {
                     uxn.queueEvent(new KeyEvent((char) byt, (byte) 0x02, (byte) 0x01));
                 }
-                uxn.queueEvent(new KeyEvent(' ', (byte) 0x03, (byte) 0x01));
+                if (i == strs.length - 1) {
+                    uxn.queueEvent(new KeyEvent(' ', (byte) 0x04, (byte) 0x01));
+                } else {
+                    uxn.queueEvent(new KeyEvent(' ', (byte) 0x03, (byte) 0x01));
+                }
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }
         }
-        uxn.queueEvent(new KeyEvent(' ', (byte) 0x04, (byte) 0x01));
     }
 
     @Override
@@ -71,5 +75,10 @@ class KeyEvent implements UXNEvent {
         uxn.pc = (uxn.readDev(0x10) << 8) | uxn.readDev(0x11); //get the vector for PC at the time the event is handled
         uxn.writeDev(device + 0x02, (byte) ch);
         uxn.writeDev(device + 0x07, type);
+    }
+
+    @Override
+    public String toString() {
+        return "%02X '%s'".formatted(type,ch);
     }
 }
