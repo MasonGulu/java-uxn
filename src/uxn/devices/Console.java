@@ -79,6 +79,6 @@ class KeyEvent implements UXNEvent {
 
     @Override
     public String toString() {
-        return "%02X '%s'".formatted(type,ch);
+        return "key: '%s' type: %02X".formatted(ch,type);
     }
 }
